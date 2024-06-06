@@ -19,17 +19,15 @@ jobs:
         run: npm install
 
       - name: Deploy to Green Environment
-        run: ./deploy-to-green.sh
+        run: ./scripts/deploy-to-green.sh
 
       - name: Run Cypress Tests on Green Environment
-        run: npx cypress run --env environment=green
-        env:
-          CYPRESS_BASE_URL: http://localhost:3002
+        run: npx cypress run --env CYPRESS_BASE_URL=http://localhost:3002 --spec "cypress/e2e/green-tests.cy.js"
 
       - name: Switch Traffic to Green Environment
         if: success()
-        run: ./switch-to-green.sh
+        run: ./scripts/switch-to-green.sh
 
       - name: Rollback to Blue Environment
         if: failure()
-        run: ./rollback-to-blue.sh
+        run: ./scripts/rollback-to-blue.sh
