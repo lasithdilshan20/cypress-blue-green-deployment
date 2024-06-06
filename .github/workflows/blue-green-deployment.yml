@@ -18,6 +18,9 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Make deployment scripts executable
+        run: chmod +x scripts/*.sh
+
       - name: Deploy to Green Environment
         run: ./scripts/deploy-to-green.sh
 
