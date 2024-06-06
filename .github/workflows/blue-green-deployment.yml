@@ -1,0 +1,35 @@
+name: Blue-Green Deployment with Cypress
+
+on: [push, pull_request]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Deploy to Green Environment
+        run: ./deploy-to-green.sh
+
+      - name: Run Cypress Tests on Green Environment
+        run: npx cypress run --env environment=green
+        env:
+          CYPRESS_BASE_URL: http://localhost:3002
+
+      - name: Switch Traffic to Green Environment
+        if: success()
+        run: ./switch-to-green.sh
+
+      - name: Rollback to Blue Environment
+        if: failure()
+        run: ./rollback-to-blue.sh

@@ -1,0 +1,25 @@
+{
+  "name": "cypress-blue-green-deployment",
+  "version": "1.0.0",
+  "description": "Blue-Green Deployments with Cypress\r Blue-Green deployment is a technique that reduces downtime and risk by running two identical production environments, only one of which (Blue) serves live production traffic. When a new version of the application is ready, it is deployed to the idle environment (Green). Once tests confirm that everything is working as expected in the Green environment, the router switches traffic from Blue to Green. If there are any issues, you can quickly revert traffic back to the Blue environment.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lasithdilshan20/cypress-blue-green-deployment.git"
+  },
+  "author": "Lasitha W.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lasithdilshan20/cypress-blue-green-deployment/issues"
+  },
+  "homepage": "https://github.com/lasithdilshan20/cypress-blue-green-deployment#readme",
+  "dependencies": {
+    "cypress": "^13.11.0",
+    "express": "^4.17.1"
+  }
+}
