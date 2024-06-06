@@ -24,6 +24,17 @@ jobs:
       - name: Deploy to Green Environment
         run: ./scripts/deploy-to-green.sh
 
+      - name: Wait for Green environment to be ready
+        run: |
+          for i in {1..30}; do
+            if curl --output /dev/null --silent --head --fail http://localhost:3002; then
+              echo "Green environment is up"
+              break
+            fi
+            echo "Waiting for Green environment..."
+            sleep 5
+          done
+
       - name: Run Cypress Tests on Green Environment
         run: npx cypress run --env CYPRESS_BASE_URL=http://localhost:3002 --spec "cypress/e2e/green-tests.cy.js"
 
